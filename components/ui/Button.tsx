@@ -9,6 +9,7 @@ interface ButtonProps {
   variant?: ButtonVariant
   className?: string
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 const WHATSAPP_NUMBER = '+31600000000' // vervang met echt nummer voor live
@@ -20,6 +21,7 @@ export function Button({
   variant = 'primary',
   className = '',
   type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const base =
     'inline-flex items-center gap-2 font-condensed font-bold text-sm tracking-widest uppercase px-7 py-4 transition-opacity hover:opacity-80'
@@ -57,7 +59,7 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={cls}>
+    <button type={type} onClick={onClick} disabled={disabled} className={cls}>
       {inner}
     </button>
   )
