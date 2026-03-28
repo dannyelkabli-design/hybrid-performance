@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -11,6 +9,9 @@ export async function POST(request: Request) {
     if (!naam || !email || !bericht) {
       return NextResponse.json({ error: 'Velden ontbreken' }, { status: 400 })
     }
+
+    // Instantiate inside handler so build doesn't fail without API key
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     await resend.emails.send({
       from: 'website@hybrid-performance.nl',
