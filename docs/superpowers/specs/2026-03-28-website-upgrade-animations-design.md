@@ -14,10 +14,13 @@
 | `lib/gsap.ts` | `'use client'`, registers `ScrollTrigger` on window; exports `{ gsap, ScrollTrigger }` |
 | `app/layout.tsx` | Root layout — renders `<Navbar />` then `{children}`; no existing provider wrapping |
 | `components/sections/` | `HeroSection.tsx`, `DienstenSection.tsx`, `ResultatenSection.tsx`, `PrijzenSection.tsx`, `CoachSection.tsx`, `ContactSection.tsx`, `CTABanner.tsx`, `StatBar.tsx` |
-| `components/ui/` | `Button.tsx`, `PageHeader.tsx`, `SectionLabel.tsx`, `useScrollReveal.ts` |
+| `components/ui/` | `Button.tsx`, `PageHeader.tsx`, `SectionLabel.tsx` |
+| `hooks/` | `useScrollReveal.ts` (import path: `@/hooks/useScrollReveal`) |
 | `components/` | `Navbar.tsx`, `Footer.tsx` |
 
 `HeroSection` currently uses a `SplitWords` helper + GSAP `gsap.context()` timeline for its entrance animation. All three upgrades must integrate without breaking this pattern.
+
+`app/page.tsx` is a Server Component and must remain one. Do NOT add `'use client'` to it.
 
 ---
 
@@ -36,6 +39,7 @@ Accepts:
   text: string          — target string to reveal
   trigger: boolean      — starts the animation when true
   speed?: number        — ms per frame, default 30
+  delay?: number        — ms to wait before starting, default 0
 
 Returns:
   displayText: string   — render this directly
@@ -43,23 +47,32 @@ Returns:
 Behaviour:
   - Character set: 0-9 A-Z # @ ! $ %
   - Reveals left-to-right: each position cycles random chars then locks
-  - Uses setInterval; clears on unmount and on trigger reset
+  - Uses setInterval; clears interval on unmount and resets when trigger becomes false
+  - The delay is implemented via setTimeout inside useEffect before starting the interval
 ```
 
 #### `components/ui/ScrambleText.tsx`
 
 ```
+'use client'
+
 Props:
   text: string
   className?: string
   triggerOnScroll?: boolean   — default false (triggers on mount)
+  delay?: number              — ms delay before scramble starts (forwarded to useScramble)
 
 Internals:
-  - If triggerOnScroll=false: passes trigger=true immediately to useScramble
-  - If triggerOnScroll=true: uses GSAP ScrollTrigger (imported from lib/gsap.ts)
-    to set trigger=true once when element is 20% inside viewport (once: true)
-  - Renders: <span>{displayText}</span>
-  - Must be 'use client'
+  - Renders: <span aria-label={text}>{displayText}</span>
+    (aria-label always shows the real text to screen readers)
+  - If triggerOnScroll=false: passes trigger=true on mount (respects delay prop)
+  - If triggerOnScroll=true:
+      useEffect creates a GSAP ScrollTrigger (from lib/gsap.ts):
+        trigger: the span element
+        start: "top 80%"   (20% inside viewport)
+        once: true
+        onEnter: () => setTrigger(true)
+      Returns cleanup: () => st.kill()
 ```
 
 ### Glitch scan-lines
@@ -94,15 +107,21 @@ CSS-only, no JS. Add to `globals.css`:
 
 | Location | Component | Trigger | Delay |
 |---|---|---|---|
-| Page headline "HYBRID PERFORMANCE" | `HeroSection.tsx` | On mount | 0.3 s |
-| Every section H2 | `DienstenSection`, `ResultatenSection`, `PrijzenSection`, `CoachSection`, `ContactSection` | Scroll (20% in viewport) | — |
-| Glitch lines | Between major sections in page layout | CSS only | — |
+| Page headline "HYBRID PERFORMANCE" | `HeroSection.tsx` | On mount | 300 ms (via `delay` prop) |
+| Section H2 — Diensten | `DienstenSection.tsx` | Scroll (start: "top 80%") | — |
+| Section H2 — Resultaten | `ResultatenSection.tsx` | Scroll | — |
+| Section H2 — Prijzen | `PrijzenSection.tsx` | Scroll | — |
+| Section H2 — Coach | `CoachSection.tsx` | Scroll | — |
+| Section H2 — Contact | `ContactSection.tsx` | Scroll | — |
+| Section H2 — CTABanner | `CTABanner.tsx` | Scroll | — |
+| `StatBar.tsx` | No scramble — leave as-is (counter animation already applied) | — | — |
+| Glitch lines | Between major sections in `app/page.tsx` | CSS only | — |
 
-**`HeroSection.tsx` change:** Replace the `<SplitWords>` spans inside `<h1>` with two `<ScrambleText>` components (`triggerOnScroll={false}`). Remove the existing `word-reveal` GSAP animation from the timeline (or keep it running on other elements — eyebrow, sub, CTA — and replace only the headline).
+**`HeroSection.tsx` change:** Replace the `<SplitWords>` spans inside `<h1>` with two `<ScrambleText>` components (`triggerOnScroll={false}` with `delay={300}`). Remove the existing `word-reveal` segment from the GSAP timeline; keep other timeline entries (eyebrow, sub, CTA) unchanged.
 
-**Section H2 change:** Wrap each H2's text content with `<ScrambleText triggerOnScroll={true} />`.
+**Section H2 change:** Wrap each H2's text content with `<ScrambleText triggerOnScroll={true} />`. Remove `useScrollReveal` from `DienstenSection` (it will be replaced by the horizontal scroll hook anyway).
 
-**Glitch lines:** Add `<div className="glitch-line" />` as a direct child between major `<section>` blocks in the page's main file (e.g., `app/page.tsx`).
+**Glitch lines in `app/page.tsx`:** Add `<div className="glitch-line" />` as a Server Component-safe HTML element between major `<section>` blocks. No `'use client'` needed; the animation is CSS-only.
 
 ---
 
@@ -115,30 +134,46 @@ Two sections pin the page while their content scrolls horizontally, then release
 ### New file: `hooks/useHorizontalScroll.ts`
 
 ```
+'use client'
+
 Accepts:
-  containerRef: RefObject<HTMLElement>   — the pinned outer element
-  trackRef: RefObject<HTMLElement>       — the inner scrolling track
+  containerRef:  RefObject<HTMLElement>   — the pinned outer element
+  trackRef:      RefObject<HTMLElement>   — the inner scrolling track
+  progressRef:   RefObject<HTMLElement>   — the progress bar element (scaleX 0→1)
 
 Behaviour:
   - Imports gsap, ScrollTrigger from lib/gsap.ts
-  - Creates a ScrollTrigger on containerRef:
-      pin: true
-      scrub: 1
-      end: () => "+=" + (trackRef.current.scrollWidth - containerRef.current.offsetWidth)
-  - Animates trackRef x from 0 to -(trackWidth - containerWidth)
-  - Animates a ".hscroll-progress" child of containerRef from scaleX 0→1
-  - touch: true for mobile support
-  - Returns cleanup: kills the ScrollTrigger instance on unmount
-
-Must be 'use client'
+  - Inside useEffect (runs client-side only):
+      const distance = trackRef.current.scrollWidth - containerRef.current.offsetWidth
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + distance,
+        }
+      })
+      tl.to(trackRef.current, { x: -distance, ease: 'none' })
+      tl.to(progressRef.current, { scaleX: 1, ease: 'none' }, 0)
+  - ScrollTrigger.config({ ignoreMobileResize: true }) called once at module level
+    (this is the correct GSAP mobile config — NOT touch: true which is invalid)
+  - Returns cleanup: () => ScrollTrigger.getAll().forEach(st => st.kill())
+    (or store the specific ScrollTrigger and kill only that one)
 ```
 
 ### `DienstenSection.tsx` — updated structure
 
-```
-<section ref={containerRef} id="diensten" style={{ overflow: 'hidden' }}>
+The existing `DienstenSection` imports from `@/data/diensten` and renders a 3-column vertical grid with `useScrollReveal`. This section is a **near-total rewrite**:
 
-  {/* Section header — stays pinned above the track */}
+- Remove `useScrollReveal` import and usage
+- Remove the vertical grid layout
+- Map the existing `diensten` data array to the horizontal cards. If the array has more than 4 items, show only the first 4. Each card uses the same fields already in the data objects (title, description, etc.)
+- Add `containerRef`, `trackRef`, `progressRef` refs and call `useHorizontalScroll`
+
+```tsx
+<section ref={containerRef} id="diensten" className="relative overflow-hidden">
+
+  {/* Section header — pinned above the track */}
   <div className="max-w-7xl mx-auto px-6 py-16">
     <SectionLabel>Diensten</SectionLabel>
     <ScrambleText text="WAT WIJ BIEDEN" triggerOnScroll className="...h2 styles..." />
@@ -146,14 +181,13 @@ Must be 'use client'
 
   {/* Horizontal track */}
   <div ref={trackRef} className="flex">
-    {/* Card 01 — Personal Training */}
-    {/* Card 02 — Online Coaching */}
-    {/* Card 03 — Voeding & Leefstijl */}
-    {/* Card 04 — Krachtraining */}
+    {diensten.slice(0, 4).map((item, i) => (
+      <DienstCard key={i} index={i + 1} {...item} />
+    ))}
   </div>
 
-  {/* Progress bar */}
-  <div className="hscroll-progress" style={{
+  {/* Progress bar — passed as progressRef */}
+  <div ref={progressRef} style={{
     position: 'absolute', bottom: 0, left: 0,
     height: '3px', width: '100%',
     background: '#ff3c00',
@@ -161,8 +195,8 @@ Must be 'use client'
     transform: 'scaleX(0)'
   }} />
 
-  {/* Scroll hint — visible until user has scrolled */}
-  <p className="scroll-hint font-condensed text-muted text-xs tracking-widest uppercase">
+  {/* Scroll hint */}
+  <p className="font-condensed text-muted text-xs tracking-widest uppercase px-6 py-3">
     Scroll →
   </p>
 
@@ -181,7 +215,7 @@ Must be 'use client'
 
 ### `ResultatenSection.tsx` — updated structure
 
-Same `useHorizontalScroll` hook pattern. Photo cards:
+Same `useHorizontalScroll` hook pattern with `containerRef`, `trackRef`, `progressRef`. Photo cards:
 
 | Property | Value |
 |---|---|
@@ -189,6 +223,8 @@ Same `useHorizontalScroll` hook pattern. Photo cards:
 | Default state | `filter: grayscale(100%)` |
 | Hover state | `filter: grayscale(0%)`, `transition: filter 0.3s ease` |
 | Overlay | Client name + result stat (e.g., "+12 kg spiermassa") positioned bottom-left, Barlow Condensed |
+
+Progress bar is also passed as a separate `ref` (same `progressRef` pattern as DienstenSection).
 
 ---
 
@@ -203,23 +239,35 @@ Navigating between pages triggers a full-screen `#ff3c00` curtain that sweeps in
 #### `lib/transitionContext.tsx`
 
 ```
+'use client'
+
 Exports:
-  TransitionProvider  — React context provider, 'use client'
+  TransitionProvider  — React context provider
   useTransition()     — returns { navigate: (href: string) => void }
 
 State:
-  isTransitioning: boolean
-  overlayRef: RefObject<HTMLDivElement>
+  overlayRef: RefObject<HTMLDivElement>   — points to the PageTransition overlay div
 
 navigate(href):
-  1. Animates overlay: x '-100%' → '0%', duration 0.4s, ease 'power2.inOut'
-  2. On complete: calls router.push(href) (useRouter from next/navigation)
-  3. After push: animates overlay x '0%' → '100%', duration 0.5s, ease 'power2.inOut'
-  4. On complete: resets x to '-100%' (ready for next transition)
+  1. gsap.set(overlay, { x: '-100%' })            — ensure starting position
+  2. gsap.to(overlay, { x: '0%', duration: 0.4, ease: 'power2.inOut', onComplete:
+       router.push(href)
+       then: gsap.to(overlay, { x: '100%', duration: 0.5, ease: 'power2.inOut', onComplete:
+         gsap.set(overlay, { x: '-100%' })          — reset to idle position
+       })
+     })
 
 popstate handling:
-  - Listens to window popstate
-  - On fire: runs curtain-out only (x '100%' is already visible from browser nav)
+  - window.addEventListener('popstate', handler) in useEffect
+  - The popstate fires when the user hits Back/Forward
+  - At this point the overlay is at x: '-100%' (idle, off-screen left)
+  - Run a full in-then-out sequence:
+      gsap.fromTo(overlay, { x: '-100%' }, { x: '0%', duration: 0.4, ease: 'power2.inOut', onComplete:
+        gsap.to(overlay, { x: '100%', duration: 0.5, ease: 'power2.inOut', onComplete:
+          gsap.set(overlay, { x: '-100%' })
+        })
+      })
+  - Cleanup: removeEventListener on unmount
 ```
 
 #### `components/ui/PageTransition.tsx`
@@ -227,13 +275,13 @@ popstate handling:
 ```
 'use client'
 
-A fixed full-screen div rendered inside TransitionProvider:
+A fixed full-screen div rendered INSIDE TransitionProvider (not layout):
   position: fixed
   inset: 0
   z-index: 9999
   background: #ff3c00
-  initial x: '-100%'
-  pointer-events: none during idle
+  initial x: '-100%'  (set via gsap.set on mount, or via inline style transform)
+  pointer-events: none (always — never blocks clicks)
 
 Contains centered text:
   "HYBRID PERFORMANCE"
@@ -241,7 +289,8 @@ Contains centered text:
   color: white
   letter-spacing: 6px
   text-transform: uppercase
-  opacity: fades in during sweep-in, fades out during sweep-out
+  opacity: controlled separately — fade in during sweep-in (0→1 at 0.2s),
+           fade out during sweep-out (1→0 at 0.3s)
 ```
 
 #### `components/ui/TransitionLink.tsx`
@@ -250,31 +299,39 @@ Contains centered text:
 'use client'
 
 Drop-in replacement for Next.js <Link>:
-  - Same props interface as next/link (href, className, children, …)
-  - onClick: calls navigate(href) from useTransition() instead of native routing
-  - Prevents default browser navigation
+  - Accepts same props as next/link: href, className, children, etc.
+  - On click:
+      1. Check if href is a hash-only link (starts with '#') or same-page hash
+         (e.g. '/#diensten', '/#resultaten', '/#prijzen'):
+           if (href.startsWith('#') || href.match(/^\/?#/)):
+             do NOT call navigate(); let default browser scroll happen
+             return
+      2. Otherwise: e.preventDefault(), call navigate(href) from useTransition()
 ```
 
 ### Integration
 
-**`app/layout.tsx`** — wrap body children:
+**`app/layout.tsx`** — `TransitionProvider` must wrap BOTH `<Navbar />` and `{children}` so that `useTransition()` is available inside `<Navbar />`:
 
 ```tsx
 import { TransitionProvider } from '@/lib/transitionContext'
 // …
 <body …>
-  <Navbar />
   <TransitionProvider>
+    <Navbar />
     {children}
   </TransitionProvider>
 </body>
 ```
 
-**`components/Navbar.tsx`** — replace all `<Link>` nav items with `<TransitionLink>`.
+`<PageTransition />` is rendered inside `TransitionProvider`'s JSX (not in layout.tsx directly).
 
-**`components/Footer.tsx`** — replace all internal `<Link>` elements with `<TransitionLink>`.
+**`components/Navbar.tsx`** — replace internal `<Link>` navigation items with `<TransitionLink>`:
+- Hash anchor links (`/#diensten`, `/#resultaten`, etc.) → use `<TransitionLink>` — the component itself detects and bypasses the curtain for these (see TransitionLink spec above)
+- Route links (`/contact`, `/over-ons`, etc.) → `<TransitionLink>` triggers curtain normally
+- External links (WhatsApp, social) → keep as plain `<a>` tags
 
-**External links** (WhatsApp, social) — keep as plain `<a>` tags; do not wrap in `TransitionLink`.
+**`components/Footer.tsx`** — same rule: internal route `<Link>`s → `<TransitionLink>`, external `<a>` tags unchanged.
 
 ### Timing summary
 
@@ -292,13 +349,15 @@ import { TransitionProvider } from '@/lib/transitionContext'
 | Constraint | Detail |
 |---|---|
 | GSAP import | Always via `lib/gsap.ts` — never import directly from `gsap` package |
-| Client components | All animated components must have `'use client'` at the top |
+| Client components | All animated components/hooks must have `'use client'` at the top |
 | New npm packages | None — GSAP (including ScrollTrigger) already installed |
-| Scramble engine | Pure `setInterval` in `useScramble.ts` — no GSAP needed for the character cycling |
-| ScrollTrigger for scramble | Used only for the scroll-triggered variant in `ScrambleText` (20% threshold) |
-| Horizontal scroll mobile | `ScrollTrigger` config must include touch-friendly scrub — test on iOS Safari |
-| Cleanup | Every `useEffect` that creates GSAP ScrollTriggers must return `() => ctx.revert()` or `st.kill()` |
-| Accessibility | `ScrambleText` must render the final `text` in an `aria-label` on its container span so screen readers read the real value, not the scrambled characters |
+| Scramble engine | Pure `setInterval` in `useScramble.ts` — no GSAP needed for character cycling |
+| ScrollTrigger for scramble | Used only for the scroll-triggered variant in `ScrambleText` (cleanup: `st.kill()` on unmount) |
+| Horizontal scroll mobile | `ScrollTrigger.config({ ignoreMobileResize: true })` — this is the correct GSAP mobile config. Test on iOS Safari. If pinning is unreliable on mobile (<768px), use `ScrollTrigger.matchMedia` to disable pin on mobile and fall back to native overflow-x scroll. |
+| Cleanup | Every `useEffect` that creates GSAP ScrollTriggers must return cleanup that kills the instance |
+| Accessibility | `ScrambleText` renders the real `text` in `aria-label` on its container span |
+| `app/page.tsx` | Remains a Server Component — no `'use client'`. Glitch line divs are plain HTML. |
+| `useScrollReveal` removal | `DienstenSection` currently uses `useScrollReveal` — remove it; the horizontal scroll hook replaces it. Other sections keep their existing scroll reveals unless replaced by ScrambleText. |
 
 ---
 
@@ -315,14 +374,15 @@ New files:
 
 Modified files:
   app/globals.css                         — add .glitch-line + @keyframes
-  app/layout.tsx                          — wrap with TransitionProvider
-  app/page.tsx                            — add <div className="glitch-line" /> dividers
+  app/layout.tsx                          — wrap Navbar + children in TransitionProvider
+  app/page.tsx                            — add <div className="glitch-line" /> dividers (Server Component)
   components/sections/HeroSection.tsx     — replace SplitWords headline with ScrambleText
-  components/sections/DienstenSection.tsx — horizontal scroll + ScrambleText H2
+  components/sections/DienstenSection.tsx — full rewrite: horizontal scroll + ScrambleText H2
   components/sections/ResultatenSection.tsx — horizontal scroll + ScrambleText H2
-  components/sections/PrijzenSection.tsx  — ScrambleText H2
-  components/sections/CoachSection.tsx    — ScrambleText H2
-  components/sections/ContactSection.tsx  — ScrambleText H2
+  components/sections/PrijzenSection.tsx  — ScrambleText H2 only
+  components/sections/CoachSection.tsx    — ScrambleText H2 only
+  components/sections/ContactSection.tsx  — ScrambleText H2 only
+  components/sections/CTABanner.tsx       — ScrambleText H2 only
   components/Navbar.tsx                   — Link → TransitionLink
   components/Footer.tsx                   — Link → TransitionLink
 ```
