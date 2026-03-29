@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { gsap } from '@/lib/gsap'
+import { TransitionLink } from '@/components/ui/TransitionLink'
 
 const links = [
   { label: 'Diensten', href: '/#diensten' },
@@ -90,14 +91,14 @@ export function Navbar() {
           <ul className="hidden md:flex items-center gap-8">
             {links.map((l) => (
               <li key={l.label}>
-                <Link
+                <TransitionLink
                   href={l.href}
                   className={`font-condensed font-bold text-xs tracking-widest uppercase transition-opacity hover:opacity-70 ${
                     l.accent ? 'text-accent' : 'text-white'
                   }`}
                 >
                   {l.label}
-                </Link>
+                </TransitionLink>
               </li>
             ))}
           </ul>
@@ -137,7 +138,7 @@ export function Navbar() {
         <ul ref={linksRef} className="flex flex-col gap-6">
           {links.map((l) => (
             <li key={l.label}>
-              <Link
+              <TransitionLink
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className={`font-condensed font-black text-3xl italic uppercase tracking-wide transition-opacity hover:opacity-70 ${
@@ -145,7 +146,7 @@ export function Navbar() {
                 }`}
               >
                 {l.label}
-              </Link>
+              </TransitionLink>
             </li>
           ))}
         </ul>

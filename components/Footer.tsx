@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { TransitionLink } from '@/components/ui/TransitionLink'
 
 export function Footer() {
   return (
@@ -15,20 +16,20 @@ export function Footer() {
 
           <nav className="flex flex-wrap gap-x-8 gap-y-3">
             {[
-              { label: 'Home', href: '/' },
-              { label: 'Diensten', href: '/diensten' },
-              { label: 'Over Ons', href: '/over-ons' },
+              { label: 'Home',        href: '/' },
+              { label: 'Diensten',   href: '/diensten' },
+              { label: 'Over Ons',   href: '/over-ons' },
               { label: 'Resultaten', href: '/resultaten' },
-              { label: 'Prijzen', href: '/prijzen' },
-              { label: 'Contact', href: '/contact' },
+              { label: 'Prijzen',    href: '/prijzen' },
+              { label: 'Contact',    href: '/contact' },
             ].map((l) => (
-              <Link
+              <TransitionLink
                 key={l.label}
                 href={l.href}
                 className="font-condensed text-xs tracking-widest uppercase text-muted hover:text-white transition-colors"
               >
                 {l.label}
-              </Link>
+              </TransitionLink>
             ))}
           </nav>
         </div>
