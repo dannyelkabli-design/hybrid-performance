@@ -28,3 +28,26 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Glitch scan-line — CSS-only section divider */
+@keyframes glitch-scan {
+  0%   { opacity: 0; transform: translateX(-100%); }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+.glitch-line {
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glitch-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, #ff3c00, transparent);
+  animation: glitch-scan 2.4s ease-in-out infinite;
+}

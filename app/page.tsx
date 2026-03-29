@@ -13,9 +13,13 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <StatBar />
+      <div className="glitch-line" />
       <DienstenSection />
+      <div className="glitch-line" />
       <ResultatenSection />
+      <div className="glitch-line" />
       <CoachSection />
+      <div className="glitch-line" />
       <PrijzenSection />
       <CTABanner />
       <ContactSection />
