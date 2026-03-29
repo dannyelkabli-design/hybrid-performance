@@ -4,7 +4,6 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { diensten } from '@/data/diensten'
 import { SectionLabel } from '@/components/ui/SectionLabel'
-import { ScrambleText } from '@/components/ui/ScrambleText'
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll'
 
 export function DienstenSection() {
@@ -24,8 +23,8 @@ export function DienstenSection() {
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
         <SectionLabel className="mb-3 block">Wat wij doen</SectionLabel>
         <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
-          <ScrambleText text="ONZE" triggerOnScroll className="block" />
-          <ScrambleText text="DIENSTEN" triggerOnScroll className="block" />
+          <span className="block">ONZE</span>
+          <span className="block">DIENSTEN</span>
         </h2>
       </div>
 

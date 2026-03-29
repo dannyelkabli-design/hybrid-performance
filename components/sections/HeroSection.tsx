@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { gsap } from '@/lib/gsap'
 import { WhatsAppButton } from '@/components/ui/Button'
 import { SectionLabel } from '@/components/ui/SectionLabel'
-import { ScrambleText } from '@/components/ui/ScrambleText'
 
 export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null)
@@ -55,16 +54,8 @@ export function HeroSection() {
         </SectionLabel>
 
         <h1 className="font-condensed font-black italic uppercase leading-none text-white mb-6">
-          <ScrambleText
-            text="HYBRID"
-            delay={300}
-            className="block text-[clamp(64px,12vw,160px)]"
-          />
-          <ScrambleText
-            text="PERFORMANCE"
-            delay={300}
-            className="block text-[clamp(64px,12vw,160px)]"
-          />
+          <span className="block text-[clamp(64px,12vw,160px)]">HYBRID</span>
+          <span className="block text-[clamp(64px,12vw,160px)]">PERFORMANCE</span>
         </h1>
 
         <p className="hero-sub text-muted font-light text-base md:text-lg max-w-md mb-8">

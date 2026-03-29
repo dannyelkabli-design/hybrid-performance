@@ -4,14 +4,13 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { testimonials } from '@/data/testimonials'
 import { SectionLabel } from '@/components/ui/SectionLabel'
-import { ScrambleText } from '@/components/ui/ScrambleText'
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 
 const photos = [
-  { src: '/images/hero.jpg',     alt: 'Training sessie', name: 'Mark V.',  detail: '-12kg · 4 maanden' },
-  { src: '/images/coach.jpg',    alt: 'Coach in actie',  name: 'Sarah K.', detail: '+8kg spier · 6 maanden' },
-  { src: '/images/training.jpg', alt: 'Resultaat',       name: 'Daan R.',  detail: 'PR squat +40kg · 3 maanden' },
+  { src: '/images/hp-1.jpg',  alt: 'Personal training sessie', name: 'Mark V.',  detail: '-12kg · 4 maanden' },
+  { src: '/images/hp-2.jpg',  alt: 'Groepstraining',           name: 'Sarah K.', detail: '+8kg spier · 6 maanden' },
+  { src: '/images/hp-3.jpg',  alt: 'Training in de gym',       name: 'Daan R.',  detail: 'PR squat +40kg · 3 maanden' },
 ]
 
 export function ResultatenSection() {
@@ -37,7 +36,7 @@ export function ResultatenSection() {
         <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
           <SectionLabel className="mb-3 block">Bewezen resultaten</SectionLabel>
           <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
-            <ScrambleText text="RESULTATEN" triggerOnScroll />
+            RESULTATEN
           </h2>
         </div>
 
