@@ -15,7 +15,9 @@ export function useHorizontalScroll({
   progressRef,
 }: UseHorizontalScrollOptions) {
   useEffect(() => {
-    // ScrollTrigger.config must run client-side only
+    // On mobile (<768px) fall back to native vertical scroll — no pinning
+    if (window.innerWidth < 768) return
+
     ScrollTrigger.config({ ignoreMobileResize: true })
 
     const container = containerRef.current
@@ -24,7 +26,7 @@ export function useHorizontalScroll({
     if (!container || !track || !progress) return
 
     const distance = track.scrollWidth - container.offsetWidth
-    if (distance <= 0) return  // content fits — nothing to scroll
+    if (distance <= 0) return
 
     const tl = gsap.timeline({
       scrollTrigger: {

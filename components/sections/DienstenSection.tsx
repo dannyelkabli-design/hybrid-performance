@@ -29,11 +29,11 @@ export function DienstenSection() {
       </div>
 
       {/* Horizontal track */}
-      <div ref={trackRef} className="flex">
+      <div ref={trackRef} className="flex flex-col md:flex-row">
         {diensten.map((d) => (
           <div
             key={d.id}
-            className="flex-shrink-0 min-w-[85vw] md:min-w-[400px] h-[480px] md:h-[400px] bg-surface border border-border flex flex-col justify-between p-6 md:p-8 transition-colors hover:border-accent/50"
+            className="flex-shrink-0 w-full md:min-w-[400px] md:w-auto h-auto md:h-[400px] bg-surface border border-border flex flex-col justify-between p-6 md:p-8 transition-colors hover:border-accent/50"
           >
             <span className="font-condensed font-black italic text-[60px] md:text-[80px] text-accent/10 leading-none select-none">
               {d.label}
@@ -59,12 +59,12 @@ export function DienstenSection() {
       {/* Progress bar — driven by useHorizontalScroll via progressRef */}
       <div
         ref={progressRef}
-        className="absolute bottom-0 left-0 h-[3px] w-full bg-accent origin-left"
+        className="absolute bottom-0 left-0 h-[3px] w-full bg-accent origin-left hidden md:block"
         style={{ transform: 'scaleX(0)' }}
       />
 
-      {/* Scroll hint */}
-      <p className="font-condensed text-xs tracking-widest uppercase text-muted px-6 py-4">
+      {/* Scroll hint — desktop only */}
+      <p className="hidden md:block font-condensed text-xs tracking-widest uppercase text-muted px-6 py-4">
         Scroll → voor meer
       </p>
     </section>

@@ -41,11 +41,11 @@ export function ResultatenSection() {
         </div>
 
         {/* Horizontal filmstrip */}
-        <div ref={trackRef} className="flex gap-3 px-6">
+        <div ref={trackRef} className="flex flex-col md:flex-row gap-3 px-6">
           {photos.map((photo) => (
             <div
               key={photo.src}
-              className="relative flex-shrink-0 min-w-[80vw] md:min-w-[360px] h-[420px] overflow-hidden"
+              className="relative flex-shrink-0 w-full md:min-w-[360px] md:w-auto h-[320px] md:h-[420px] overflow-hidden"
             >
               <Image
                 src={photo.src}
@@ -68,12 +68,12 @@ export function ResultatenSection() {
         {/* Progress bar */}
         <div
           ref={progressRef}
-          className="absolute bottom-0 left-0 h-[3px] w-full bg-accent origin-left"
+          className="absolute bottom-0 left-0 h-[3px] w-full bg-accent origin-left hidden md:block"
           style={{ transform: 'scaleX(0)' }}
         />
 
-        {/* Scroll hint */}
-        <p className="font-condensed text-xs tracking-widest uppercase text-muted px-6 py-4">
+        {/* Scroll hint — desktop only */}
+        <p className="hidden md:block font-condensed text-xs tracking-widest uppercase text-muted px-6 py-4">
           Scroll → voor meer
         </p>
       </section>
