@@ -5,22 +5,7 @@ import Image from 'next/image'
 import { gsap } from '@/lib/gsap'
 import { WhatsAppButton } from '@/components/ui/Button'
 import { SectionLabel } from '@/components/ui/SectionLabel'
-
-// Splits tekst in spans per woord voor de animatie
-function SplitWords({ text, className }: { text: string; className?: string }) {
-  return (
-    <span className={className} aria-label={text}>
-      {text.split(' ').map((word, i) => (
-        <span
-          key={i}
-          className="inline-block overflow-hidden mr-[0.2em] last:mr-0"
-        >
-          <span className="inline-block word-reveal">{word}</span>
-        </span>
-      ))}
-    </span>
-  )
-}
+import { ScrambleText } from '@/components/ui/ScrambleText'
 
 export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null)
@@ -34,14 +19,7 @@ export function HeroSection() {
       // Eyebrow label
       tl.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6 }, 0.3)
 
-      // Woorden van de headline vallen van onder in
-      tl.from(
-        '.word-reveal',
-        { y: '110%', duration: 0.8, stagger: 0.08 },
-        0.5
-      )
-
-      // Subtekst + CTA knoppen
+      // Subtekst + CTA (word-reveal removed — ScrambleText handles the headline)
       tl.from('.hero-sub', { y: 20, opacity: 0, duration: 0.6 }, 1.1)
       tl.from('.hero-cta', { y: 20, opacity: 0, duration: 0.6, stagger: 0.1 }, 1.3)
 
@@ -66,7 +44,6 @@ export function HeroSection() {
           priority
           className="object-cover object-center"
         />
-        {/* Gradient overlay: links donker (tekst), rechts transparant */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#0a0a0a]/60 to-[#0a0a0a]/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 via-transparent to-transparent" />
       </div>
@@ -78,12 +55,14 @@ export function HeroSection() {
         </SectionLabel>
 
         <h1 className="font-condensed font-black italic uppercase leading-none text-white mb-6">
-          <SplitWords
+          <ScrambleText
             text="HYBRID"
+            delay={300}
             className="block text-[clamp(64px,12vw,160px)]"
           />
-          <SplitWords
+          <ScrambleText
             text="PERFORMANCE"
+            delay={300}
             className="block text-[clamp(64px,12vw,160px)]"
           />
         </h1>
