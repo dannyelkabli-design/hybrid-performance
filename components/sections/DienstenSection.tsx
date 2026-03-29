@@ -1,56 +1,73 @@
 'use client'
 
+import { useRef } from 'react'
 import Link from 'next/link'
 import { diensten } from '@/data/diensten'
 import { SectionLabel } from '@/components/ui/SectionLabel'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { ScrambleText } from '@/components/ui/ScrambleText'
+import { useHorizontalScroll } from '@/hooks/useHorizontalScroll'
 
 export function DienstenSection() {
-  const ref = useScrollReveal<HTMLElement>({
-    selector: '.dienst-card',
-    stagger: 0.15,
-    y: 50,
-  })
+  const containerRef = useRef<HTMLElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const progressRef = useRef<HTMLDivElement>(null)
+
+  useHorizontalScroll({ containerRef, trackRef, progressRef })
 
   return (
     <section
+      ref={containerRef}
       id="diensten"
-      ref={ref}
-      className="py-24 max-w-7xl mx-auto px-6"
+      className="relative overflow-hidden bg-background"
     >
-      <div className="mb-16">
+      {/* Section header */}
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
         <SectionLabel className="mb-3 block">Wat wij doen</SectionLabel>
         <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
-          ONZE<br />DIENSTEN
+          <ScrambleText text="ONZE" triggerOnScroll className="block" />
+          <ScrambleText text="DIENSTEN" triggerOnScroll className="block" />
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Horizontal track */}
+      <div ref={trackRef} className="flex">
         {diensten.map((d) => (
           <div
             key={d.id}
-            className="dienst-card bg-surface border border-border p-8 flex flex-col gap-6 hover:border-accent/50 transition-colors"
+            className="flex-shrink-0 min-w-[320px] md:min-w-[400px] h-[400px] bg-surface border border-border flex flex-col justify-between p-8 transition-colors hover:border-accent/50"
           >
-            <span className="font-condensed font-black italic text-5xl text-accent/20 leading-none">
+            <span className="font-condensed font-black italic text-[80px] text-accent/10 leading-none select-none">
               {d.label}
             </span>
-            <div>
-              <h3 className="font-condensed font-black uppercase text-2xl text-white mb-3">
+            <div className="flex flex-col gap-4">
+              <h3 className="font-condensed font-black uppercase text-2xl text-white leading-tight">
                 {d.title}
               </h3>
               <p className="text-muted font-light text-sm leading-relaxed">
                 {d.description}
               </p>
+              <Link
+                href={d.href}
+                className="font-condensed font-bold text-xs tracking-widest uppercase text-accent hover:opacity-70 transition-opacity"
+              >
+                {d.cta} →
+              </Link>
             </div>
-            <Link
-              href={d.href}
-              className="mt-auto font-condensed font-bold text-xs tracking-widest uppercase text-accent hover:opacity-70 transition-opacity"
-            >
-              {d.cta} →
-            </Link>
           </div>
         ))}
       </div>
+
+      {/* Progress bar — driven by useHorizontalScroll via progressRef */}
+      <div
+        ref={progressRef}
+        className="absolute bottom-0 left-0 h-[3px] w-full bg-accent origin-left"
+        style={{ transform: 'scaleX(0)' }}
+      />
+
+      {/* Scroll hint */}
+      <p className="font-condensed text-xs tracking-widest uppercase text-muted px-6 py-4">
+        Scroll → voor meer
+      </p>
     </section>
   )
 }
