@@ -50,7 +50,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl mx-auto px-6 pt-16">
         <SectionLabel className="hero-eyebrow mb-4 block">
-          Krachttraining &amp; Coaching
+          Personal Trainer · Obdam · Regio Alkmaar
         </SectionLabel>
 
         <h1 className="font-condensed font-black italic uppercase leading-none text-white mb-6">
@@ -59,8 +59,8 @@ export function HeroSection() {
         </h1>
 
         <p className="hero-sub text-muted font-light text-base md:text-lg max-w-md mb-8">
-          Professionele begeleiding voor optimale prestaties. Personal training,
-          online coaching en voeding op maat.
+          Personal trainer in Obdam — bereikbaar vanuit Alkmaar, Heerhugowaard,
+          Hensbroek en omgeving. Online coaching beschikbaar in heel Nederland.
         </p>
 
         <div className="flex flex-wrap gap-4">

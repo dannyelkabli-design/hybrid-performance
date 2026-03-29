@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import { PageHeader } from '@/components/ui/PageHeader'
+
+export const metadata: Metadata = {
+  title: 'Diensten — Personal Training & Coaching | Obdam, Alkmaar, Heerhugowaard',
+  description: 'Personal training in Obdam, online coaching en voedingsadvies. Bereikbaar vanuit Alkmaar, Heerhugowaard, Hensbroek en Langedijk. Bekijk onze diensten en tarieven.',
+  alternates: { canonical: 'https://hybrid-performance.nl/diensten' },
+}
 import { CTABanner } from '@/components/sections/CTABanner'
 import { Footer } from '@/components/Footer'
 import { WhatsAppButton } from '@/components/ui/Button'

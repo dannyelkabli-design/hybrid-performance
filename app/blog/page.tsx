@@ -6,8 +6,9 @@ import { blogPosts } from '@/data/blog'
 import { TransitionLink } from '@/components/ui/TransitionLink'
 
 export const metadata: Metadata = {
-  title: 'Blog & Tips — Hybrid Performance',
-  description: 'Trainingstips, voedingsadvies en coaching inzichten van Hybrid Performance.',
+  title: 'Blog & Tips — Hybrid Performance | Personal Trainer Obdam',
+  description: 'Trainingstips, voedingsadvies en coaching inzichten van Brendon — personal trainer in Obdam (regio Alkmaar & Heerhugowaard). Gebaseerd op wetenschappelijk onderzoek.',
+  alternates: { canonical: 'https://hybrid-performance.nl/blog' },
 }
 
 export default function BlogPage() {
