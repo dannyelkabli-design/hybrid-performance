@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { ScrambleText } from '@/components/ui/ScrambleText'
 
 export function CoachSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -68,7 +69,8 @@ export function CoachSection() {
         <div className="coach-text flex flex-col gap-6">
           <SectionLabel>Over de coach</SectionLabel>
           <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none">
-            JOUW<br />BEGELEIDER
+            <ScrambleText text="JOUW" triggerOnScroll className="block" />
+            <ScrambleText text="BEGELEIDER" triggerOnScroll className="block" />
           </h2>
           <p className="text-muted font-light text-base leading-relaxed">
             Met meer dan 5 jaar ervaring in krachttraining en coaching help ik

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Button, WhatsAppButton } from '@/components/ui/Button'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { ScrambleText } from '@/components/ui/ScrambleText'
 
 export function ContactSection() {
   const ref = useScrollReveal<HTMLElement>({ y: 30 })
@@ -38,7 +39,8 @@ export function ContactSection() {
         <div>
           <SectionLabel className="mb-3 block">Kom in contact</SectionLabel>
           <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none mb-6">
-            NEEM<br />CONTACT OP
+            <ScrambleText text="NEEM" triggerOnScroll className="block" />
+            <ScrambleText text="CONTACT OP" triggerOnScroll className="block" />
           </h2>
           <p className="text-muted font-light text-base leading-relaxed mb-8">
             Heb je een vraag of wil je direct starten? Stuur een berichtje via

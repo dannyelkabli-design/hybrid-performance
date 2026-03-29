@@ -4,6 +4,7 @@ import { pakketten } from '@/data/prijzen'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { WhatsAppButton } from '@/components/ui/Button'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { ScrambleText } from '@/components/ui/ScrambleText'
 
 export function PrijzenSection() {
   const ref = useScrollReveal<HTMLElement>({
@@ -22,7 +23,7 @@ export function PrijzenSection() {
         <div className="mb-16">
           <SectionLabel className="mb-3 block">Transparante prijzen</SectionLabel>
           <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
-            PAKKETTEN
+            <ScrambleText text="PAKKETTEN" triggerOnScroll />
           </h2>
         </div>
 
