@@ -39,10 +39,10 @@ export function Footer() {
             © {new Date().getFullYear()} Hybrid Performance. Alle rechten voorbehouden.
           </p>
           <div className="flex gap-4">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-white transition-colors text-xs font-condensed uppercase tracking-widest">
+            <a href="https://instagram.com/hybrid.performance.gym" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-white transition-colors text-xs font-condensed uppercase tracking-widest py-2 px-1">
               Instagram
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-white transition-colors text-xs font-condensed uppercase tracking-widest">
+            <a href="https://facebook.com/Hybridperformance.nl" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-white transition-colors text-xs font-condensed uppercase tracking-widest py-2 px-1">
               Facebook
             </a>
           </div>

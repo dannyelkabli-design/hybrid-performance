@@ -50,11 +50,11 @@ export function StatBar() {
               <div className="flex items-end gap-1">
                 <span
                   data-count={stat.value}
-                  className="font-condensed font-black italic text-6xl text-white tabular-nums"
+                  className="font-condensed font-black italic text-4xl md:text-6xl text-white tabular-nums"
                 >
                   0
                 </span>
-                <span className="font-condensed font-black italic text-4xl text-accent pb-1">
+                <span className="font-condensed font-black italic text-2xl md:text-4xl text-accent pb-1">
                   {stat.suffix}
                 </span>
               </div>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizontal Scroll Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; color: #fff; padding: 32px 24px; font-family: Arial, sans-serif; }
+h1 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #555; margin-bottom: 6px; }
+.sub { font-size: 12px; color: #444; margin-bottom: 36px; }
+
+/* Top-level layout */
+.section-demo {
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.section-header {
+  background: #111;
+  padding: 12px 20px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #444;
+  border-bottom: 1px solid #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-header span { color: #ff3c00; }
+
+/* Horizontal scroll mockup */
+.hscroll-container {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #0d0d0d;
+}
+
+/* Diensten horizontal */
+.dienst-track {
+  display: flex;
+  gap: 0;
+  animation: slide-diensten 8s ease-in-out infinite alternate;
+}
+@keyframes slide-diensten {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-200px); }
+}
+.dienst-panel {
+  min-width: 220px;
+  height: 200px;
+  border-right: 1px solid #1e1e1e;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+.dienst-panel:hover { background: #141414; }
+.dienst-panel.active { border-color: #ff3c00; background: #141414; }
+.dp-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  font-style: italic;
+  color: rgba(255,60,0,0.1);
+  line-height: 1;
+}
+.dp-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  line-height: 1.1;
+}
+.dp-desc {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.5;
+  font-family: Inter, sans-serif;
+}
+.dp-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ff3c00;
+}
+
+/* Progress bar */
+.scroll-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #ff3c00;
+  animation: progress 8s ease-in-out infinite alternate;
+}
+@keyframes progress {
+  0% { width: 20%; }
+  100% { width: 100%; }
+}
+
+/* Resultaten horizontal */
+.result-track {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  animation: slide-results 6s ease-in-out infinite alternate;
+}
+@keyframes slide-results {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-180px); }
+}
+.result-photo {
+  min-width: 160px;
+  height: 180px;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.result-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.4s;
+}
+.result-photo:hover img { filter: grayscale(0%); }
+.result-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+.result-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+}
+.result-detail {
+  font-size: 10px;
+  color: #888;
+  font-family: Inter, sans-serif;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #0a0a0a;
+  border-top: 1px solid #1e1e1e;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+.scroll-hint .arrow {
+  color: #ff3c00;
+  animation: bounce-x 1.5s ease-in-out infinite;
+}
+@keyframes bounce-x {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+/* Info list */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+
+.info-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 4px;
+  padding: 16px;
+}
+.info-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.info-text {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.6;
+  font-family: Inter, sans-serif;
+}
+.info-text strong { color: #ff3c00; }
+</style>
+</head>
+<body>
+
+<h1>Horizontale Scroll Secties</h1>
+<p class="sub">Twee secties krijgen horizontale scroll via GSAP ScrollTrigger pin</p>
+
+<!-- Diensten horizontal scroll -->
+<div class="section-demo">
+  <div class="section-header">
+    Diensten sectie — <span>horizontaal scrollen terwijl je verticaal scrollt</span>
+  </div>
+  <div class="hscroll-container" style="height:200px;">
+    <div class="dienst-track">
+      <div class="dienst-panel active">
+        <div class="dp-num">01</div>
+        <div>
+          <div class="dp-title">Personal<br>Training</div>
+          <div class="dp-desc" style="margin-top:8px;">Één-op-één begeleiding voor jouw doelen.</div>
+        </div>
+        <div class="dp-cta">Meer info →</div>
+      </div>
+      <div class="dienst-panel">
+        <div class="dp-num">02</div>
+        <div>
+          <div class="dp-title">Online<br>Coaching</div>
+          <div class="dp-desc" style="margin-top:8px;">Train overal met persoonlijk schema.</div>
+        </div>
+        <div class="dp-cta">Meer info →</div>
+      </div>
+      <div class="dienst-panel">
+        <div class="dp-num">03</div>
+        <div>
+          <div class="dp-title">Voeding &<br>Leefstijl</div>
+          <div class="dp-desc" style="margin-top:8px;">Duurzame aanpak zonder onzinnige diëten.</div>
+        </div>
+        <div class="dp-cta">Meer info →</div>
+      </div>
+      <div class="dienst-panel" style="opacity:0.3">
+        <div class="dp-num">04</div>
+        <div><div class="dp-title">Kracht-<br>programma</div></div>
+      </div>
+    </div>
+    <div class="scroll-progress"></div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <span class="arrow">→ → →</span>
+    <span>om meer te zien</span>
+  </div>
+</div>
+
+<!-- Resultaten horizontal scroll -->
+<div class="section-demo">
+  <div class="section-header">
+    Resultaten sectie — <span>foto's scrollen horizontaal als filmstrip</span>
+  </div>
+  <div class="hscroll-container" style="height:180px; overflow:hidden;">
+    <div class="result-track">
+      <div class="result-photo">
+        <img src="https://hybrid-performance.nl/wp-content/uploads/go-x/u/854a041e-d48c-4ce8-b118-af45bed45700/l0,t0,w960,h640/image.jpg" alt="">
+        <div class="result-overlay">
+          <div class="result-name">Mark V.</div>
+          <div class="result-detail">-12kg · 4 maanden</div>
+        </div>
+      </div>
+      <div class="result-photo">
+        <img src="https://hybrid-performance.nl/wp-content/uploads/go-x/u/6429e5d1-738f-4069-b3b6-65196d5fd6a9/l0,t0,w960,h639/image.jpg" alt="">
+        <div class="result-overlay">
+          <div class="result-name">Sarah K.</div>
+          <div class="result-detail">+8kg spier · 6 maanden</div>
+        </div>
+      </div>
+      <div class="result-photo">
+        <img src="https://hybrid-performance.nl/wp-content/uploads/go-x/u/01499345-ee1e-4717-bcbc-0db2f5b00784/l0,t0,w960,h639/image.jpg" alt="">
+        <div class="result-overlay">
+          <div class="result-name">Daan R.</div>
+          <div class="result-detail">PR squat +40kg · 3 maanden</div>
+        </div>
+      </div>
+      <div class="result-photo" style="opacity:0.4; background:#141414; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#555;">meer →</span>
+      </div>
+    </div>
+    <div class="scroll-progress" style="animation-duration:6s;"></div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll voor meer resultaten</span>
+    <span class="arrow">→ → →</span>
+  </div>
+</div>
+
+<!-- Info -->
+<div class="info-grid">
+  <div class="info-card">
+    <div class="info-title">Hoe werkt het?</div>
+    <div class="info-text">GSAP ScrollTrigger <strong>pint de sectie</strong> terwijl je scrollt. De track beweegt horizontaal. Als je klaar bent met de horizontale content, <strong>unpin</strong> de sectie en ga je verder met verticaal scrollen.</div>
+  </div>
+  <div class="info-card">
+    <div class="info-title">Progress indicator</div>
+    <div class="info-text">Oranje balk onderaan toont <strong>hoe ver je bent</strong> in de horizontale scroll. Vult van 0% naar 100% mee met de scroll progress.</div>
+  </div>
+</div>
+
+<p style="font-size:11px;color:#333;margin-top:20px;">Ziet dit er goed uit? Typ ja voor de page transitions.</p>
+
+</body>
+</html>

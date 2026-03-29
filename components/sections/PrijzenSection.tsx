@@ -21,7 +21,7 @@ export function PrijzenSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <SectionLabel className="mb-3 block">Transparante prijzen</SectionLabel>
-          <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
+          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none">
             PAKKETTEN
           </h2>
         </div>
@@ -45,7 +45,7 @@ export function PrijzenSection() {
                 {pakket.name}
               </h3>
               <div className="flex items-end gap-1 mb-8">
-                <span className="font-condensed font-black text-4xl text-white">
+                <span className="font-condensed font-black text-3xl md:text-4xl text-white">
                   {pakket.price}
                 </span>
                 {pakket.period && (

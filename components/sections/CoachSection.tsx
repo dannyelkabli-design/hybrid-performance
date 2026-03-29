@@ -49,7 +49,7 @@ export function CoachSection() {
       ref={sectionRef}
       className="py-24 max-w-7xl mx-auto px-6"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
         {/* Foto met parallax */}
         <div className="relative aspect-[3/4] overflow-hidden">
           <div ref={photoRef} className="absolute inset-[-15%]">
@@ -67,7 +67,7 @@ export function CoachSection() {
         {/* Tekst */}
         <div className="coach-text flex flex-col gap-6">
           <SectionLabel>Over de coach</SectionLabel>
-          <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none">
+          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none">
             <span className="block">JOUW</span>
             <span className="block">BEGELEIDER</span>
           </h2>

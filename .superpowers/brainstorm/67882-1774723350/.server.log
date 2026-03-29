@@ -1,0 +1,12 @@
+{"type":"server-started","port":55009,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:55009","screen_dir":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350"}
+{"type":"screen-added","file":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350/upgrade-richting.html"}
+{"source":"user-event","type":"click","text":"HYB#1D\n      \n      P3RFECT\n    \n    \n      Tekst Scramble + Glitch\n      Headlines die beginnen als random karakters en dan \"inscramblen\" naar de echte tekst. Glitch-lijnen over secties. Raw, energetisch, cyberpunk-achtig maar stoer voor fitness.","choice":"scramble","id":null,"timestamp":1774723563615}
+{"type":"screen-added","file":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350/waiting-1.html"}
+{"type":"screen-added","file":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350/scramble-design.html"}
+{"type":"screen-added","file":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350/hscroll-design.html"}
+{"type":"screen-added","file":"/Users/dannyelkabli/Website's/hybrid-performance/.superpowers/brainstorm/67882-1774723350/transitions-design.html"}
+{"source":"user-event","type":"click","text":"Over Ons\n        \n      \n    \n    \n      Zwart Fade\n      Scherm fades naar zwart, nieuwe pagina fades in. Cinematic en subtiel — zacht maar stijlvol.","choice":"fade","id":null,"timestamp":1774723888452}
+{"source":"user-event","type":"click","text":"Homepage\n        Hybrid Performance\n        Diensten\n      \n    \n    \n      Oranje Curtain Wipe\n      Oranje blok veegt over het scherm, pagina wisselt, oranje trekt terug. Dramatisch en on-brand.","choice":"curtain","id":null,"timestamp":1774723894830}
+{"source":"user-event","type":"click","text":"Over Ons\n        \n      \n    \n    \n      Zwart Fade\n      Scherm fades naar zwart, nieuwe pagina fades in. Cinematic en subtiel — zacht maar stijlvol.","choice":"fade","id":null,"timestamp":1774723896080}
+{"source":"user-event","type":"click","text":"Homepage\n        Hybrid Performance\n        Diensten\n      \n    \n    \n      Oranje Curtain Wipe\n      Oranje blok veegt over het scherm, pagina wisselt, oranje trekt terug. Dramatisch en on-brand.","choice":"curtain","id":null,"timestamp":1774723899264}
+{"type":"server-stopped","reason":"idle timeout"}

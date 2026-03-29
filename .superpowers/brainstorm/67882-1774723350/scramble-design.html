@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scramble Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=Inter:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; color: #fff; padding: 32px 24px; font-family: Arial, sans-serif; }
+h1 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #555; margin-bottom: 6px; font-family: Arial, sans-serif; }
+.sub { font-size: 12px; color: #444; margin-bottom: 36px; }
+
+.demo-block {
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+.demo-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #444;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #ff3c00;
+  margin-bottom: 10px;
+}
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(48px, 8vw, 96px);
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -1px;
+}
+.scramble-char { color: #ff3c00; }
+.glitch-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #ff3c00 40%, transparent 100%);
+  margin: 16px 0;
+  animation: glitch-scan 3s ease-in-out infinite;
+}
+@keyframes glitch-scan {
+  0%, 100% { opacity: 0; transform: scaleX(0.3) translateX(-30%); }
+  40%, 60% { opacity: 1; transform: scaleX(1) translateX(0); }
+}
+
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 52px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.split { display: flex; gap: 20px; flex-wrap: wrap; }
+.half { flex: 1; min-width: 220px; }
+
+.trigger-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.trigger-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: #888;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+.trigger-list li .dot {
+  width: 6px;
+  height: 6px;
+  background: #ff3c00;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.trigger-list li strong { color: #fff; }
+
+.chars-demo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+.chars-demo .final { color: #fff; }
+.chars-demo .rnd { color: #ff3c00; opacity: 0.8; }
+
+.progress-bar {
+  width: 100%;
+  height: 2px;
+  background: #1e1e1e;
+  margin-top: 12px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: #ff3c00;
+  animation: fill 2.5s ease-in-out infinite;
+}
+@keyframes fill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<h1>Scramble / Glitch Design</h1>
+<p class="sub">Zo zien de scramble-effecten eruit op de nieuwe site</p>
+
+<div class="split">
+
+  <div class="half">
+    <div class="demo-block">
+      <div class="demo-label">Hero headline — on page load</div>
+      <div class="eyebrow">Krachttraining & Coaching</div>
+      <div class="hero-title">
+        <span class="final">HY</span><span class="scramble-char">B#1</span><span class="final">D</span><br>
+        <span class="scramble-char">P3RF</span><span class="final">ECT</span>
+      </div>
+      <div class="glitch-line"></div>
+      <div style="font-family:'Inter',sans-serif;font-size:13px;color:#555;margin-top:4px;">
+        Karakter voor karakter onthult naar de echte tekst
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-label">Sectie H2's — bij scroll (eenmalig)</div>
+      <div class="section-title">
+        <span class="final">ON</span><span class="scramble-char">Z3</span><br>
+        <span class="scramble-char">D13N</span><span class="final">ST</span><span class="scramble-char">3N</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="half">
+    <div class="demo-block" style="height: 100%; min-height: 200px;">
+      <div class="demo-label">Wanneer wordt het getriggerd?</div>
+      <ul class="trigger-list">
+        <li>
+          <div class="dot"></div>
+          <div><strong>Hero headline</strong> — direct bij page load, 0.3s delay. Duurt ~1.5s. Scramble van links naar rechts.</div>
+        </li>
+        <li>
+          <div class="dot"></div>
+          <div><strong>Sectie koppen</strong> (Diensten, Resultaten, Prijzen, etc.) — trigger zodra sectie in viewport scrollt. Eenmalig.</div>
+        </li>
+        <li>
+          <div class="dot"></div>
+          <div><strong>Glitch lijnen</strong> — subtiele horizontale scan-lijnen die continu animeren op sectie borders.</div>
+        </li>
+        <li>
+          <div class="dot"></div>
+          <div><strong>Karakterset</strong> — gebruikt: <span style="color:#ff3c00;font-family:monospace">0-9 A-Z # @ ! $ %</span> — raw, technisch, stoer.</div>
+        </li>
+        <li>
+          <div class="dot"></div>
+          <div><strong>Speed</strong> — snel genoeg om energiek te zijn (30ms per frame), langzaam genoeg om te zien wat er gebeurt.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<p style="font-size:11px;color:#333;margin-top:20px;font-family:Arial,sans-serif;">Ziet dit er goed uit? Typ ja in de chat om door te gaan naar horizontale scroll.</p>
+
+</body>
+</html>

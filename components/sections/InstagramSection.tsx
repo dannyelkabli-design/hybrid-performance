@@ -17,7 +17,7 @@ export function InstagramSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
             <SectionLabel className="mb-3 block">Volg ons</SectionLabel>
-            <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none">
+            <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none">
               <span className="block">@HYBRID.</span>
               <span className="block">PERFORMANCE.GYM</span>
             </h2>
@@ -26,7 +26,7 @@ export function InstagramSection() {
             href="https://instagram.com/hybrid.performance.gym"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 font-condensed font-bold text-xs tracking-widest uppercase px-7 py-4 border border-white text-white hover:opacity-70 transition-opacity"
+            className="shrink-0 self-start md:self-auto inline-flex items-center gap-2 font-condensed font-bold text-xs tracking-widest uppercase px-7 py-4 border border-white text-white hover:opacity-70 transition-opacity"
           >
             Volg op Instagram →
           </a>

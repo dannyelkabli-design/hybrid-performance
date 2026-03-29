@@ -9,7 +9,7 @@ export function CTABanner() {
   return (
     <section ref={ref} className="bg-accent py-20">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
-        <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
+        <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none">
           <span className="block">KLAAR OM TE</span>
           <span className="block">BEGINNEN?</span>
         </h2>

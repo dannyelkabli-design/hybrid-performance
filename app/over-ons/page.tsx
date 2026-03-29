@@ -19,10 +19,10 @@ export default function OverOnsPage() {
 
       {/* Intro */}
       <section className="py-24 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           <div>
             <SectionLabel className="mb-3 block">#keepitmoving</SectionLabel>
-            <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none mb-6">
+            <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none mb-6">
               <span className="block">BEWEGING.</span>
               <span className="block">MINDSET.</span>
               <span className="block">VOEDING.</span>
@@ -89,7 +89,7 @@ export default function OverOnsPage() {
       {/* Foto grid — gym impressie */}
       <section className="py-24 max-w-7xl mx-auto px-6">
         <SectionLabel className="mb-3 block">De gym</SectionLabel>
-        <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none mb-12">
+        <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none mb-12">
           <span className="block">ONZE</span>
           <span className="block">LOCATIE</span>
         </h2>
@@ -126,7 +126,7 @@ export default function OverOnsPage() {
               { stat: '1:1', label: 'Persoonlijke begeleiding' },
             ].map((s) => (
               <div key={s.label} className="text-center">
-                <p className="font-condensed font-black italic text-5xl text-accent leading-none mb-2">
+                <p className="font-condensed font-black italic text-4xl md:text-5xl text-accent leading-none mb-2">
                   {s.stat}
                 </p>
                 <p className="font-condensed text-xs tracking-widest uppercase text-muted">

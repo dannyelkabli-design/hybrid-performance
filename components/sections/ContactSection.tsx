@@ -37,7 +37,7 @@ export function ContactSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
         <div>
           <SectionLabel className="mb-3 block">Kom in contact</SectionLabel>
-          <h2 className="font-condensed font-black italic uppercase text-5xl text-white leading-none mb-6">
+          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none mb-6">
             <span className="block">NEEM</span>
             <span className="block">CONTACT OP</span>
           </h2>
@@ -54,21 +54,21 @@ export function ContactSection() {
             type="text"
             required
             placeholder="Naam"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors"
           />
           <input
             name="email"
             type="email"
             required
             placeholder="E-mailadres"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors"
           />
           <textarea
             name="bericht"
             required
             rows={5}
             placeholder="Jouw bericht"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors resize-none"
           />
           <Button type="submit" disabled={status === 'loading'}>
             {status === 'loading' ? 'Versturen...' : 'Verstuur bericht'}

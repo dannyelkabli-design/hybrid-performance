@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Transitions Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; color: #fff; padding: 32px 24px; font-family: Arial, sans-serif; }
+h1 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #555; margin-bottom: 6px; }
+.sub { font-size: 12px; color: #444; margin-bottom: 36px; }
+
+.options { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.opt {
+  flex: 1; min-width: 220px;
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.opt:hover { border-color: #666; }
+.opt.selected { border-color: #ff3c00; box-shadow: 0 0 0 1px #ff3c00; }
+.opt.selected::after {
+  content: '✓ Geselecteerd';
+  position: absolute;
+  top: 8px; right: 8px;
+  background: #ff3c00;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 7px;
+  border-radius: 2px;
+  font-family: Arial, sans-serif;
+}
+.opt-preview {
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  background: #141414;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.opt-label {
+  padding: 12px 14px;
+  background: #0d0d0d;
+  border-top: 1px solid #1e1e1e;
+}
+.opt-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.opt-desc { font-size: 11px; color: #555; line-height: 1.5; }
+
+/* Option A: Curtain wipe */
+.curtain-demo {
+  width: 100%; height: 100%;
+  position: relative;
+}
+.page-a {
+  position: absolute; inset: 0;
+  background: #1a1a1a;
+  display: flex; align-items: center; justify-content: center;
+}
+.page-a-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #333;
+}
+.curtain {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  width: 0%;
+  background: #ff3c00;
+  animation: curtain-wipe 3s ease-in-out infinite;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.curtain-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  animation: label-show 3s ease-in-out infinite;
+}
+@keyframes curtain-wipe {
+  0%   { width: 0%; }
+  40%  { width: 100%; }
+  60%  { width: 100%; }
+  100% { width: 0%; left: auto; right: 0; }
+}
+@keyframes label-show {
+  0%, 20% { opacity: 0; }
+  35%, 65% { opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+.page-b {
+  position: absolute; inset: 0;
+  background: #1a1a1a;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  animation: page-b-reveal 3s ease-in-out infinite;
+}
+.page-b-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #fff;
+}
+@keyframes page-b-reveal {
+  0%, 55% { opacity: 0; }
+  70%, 100% { opacity: 1; }
+}
+
+/* Option B: Black overlay fade */
+.fade-demo { width: 100%; height: 100%; position: relative; }
+.fade-page {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.fade-page-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #fff;
+}
+.fade-overlay {
+  position: absolute; inset: 0;
+  background: #0a0a0a;
+  animation: fade-in-out 3s ease-in-out infinite;
+}
+@keyframes fade-in-out {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.tech-note {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 4px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.tech-item { flex: 1; min-width: 180px; }
+.tech-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ff3c00;
+  margin-bottom: 6px;
+}
+.tech-text { font-size: 11px; color: #555; line-height: 1.6; }
+.tech-text strong { color: #888; }
+</style>
+<script>
+function pick(el) {
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  if (window._recordChoice) window._recordChoice(el.dataset.choice, el.querySelector('.opt-title').textContent);
+}
+</script>
+</head>
+<body>
+
+<h1>Page Transitions</h1>
+<p class="sub">Overgang bij navigatie naar een andere pagina — welke stijl?</p>
+
+<div class="options">
+
+  <!-- Option A: Orange curtain wipe -->
+  <div class="opt selected" data-choice="curtain" onclick="pick(this)">
+    <div class="opt-preview">
+      <div class="curtain-demo">
+        <div class="page-a"><div class="page-a-text">Homepage</div></div>
+        <div class="curtain"><div class="curtain-label">Hybrid Performance</div></div>
+        <div class="page-b"><div class="page-b-text">Diensten</div></div>
+      </div>
+    </div>
+    <div class="opt-label">
+      <div class="opt-title">Oranje Curtain Wipe</div>
+      <div class="opt-desc">Oranje blok veegt over het scherm, pagina wisselt, oranje trekt terug. Dramatisch en on-brand.</div>
+    </div>
+  </div>
+
+  <!-- Option B: Dark fade -->
+  <div class="opt" data-choice="fade" onclick="pick(this)">
+    <div class="opt-preview">
+      <div class="fade-demo">
+        <div class="fade-page"><div class="fade-page-text">Over Ons</div></div>
+        <div class="fade-overlay"></div>
+      </div>
+    </div>
+    <div class="opt-label">
+      <div class="opt-title">Zwart Fade</div>
+      <div class="opt-desc">Scherm fades naar zwart, nieuwe pagina fades in. Cinematic en subtiel — zacht maar stijlvol.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tech-note">
+  <div class="tech-item">
+    <div class="tech-title">Hoe het werkt</div>
+    <div class="tech-text">Een <strong>&lt;Curtain&gt;</strong> component leeft in de root layout. Bij klik op een link: GSAP animeert de overlay in, router navigeert, overlay animeert uit. Werkt via <strong>usePathname</strong> in Next.js App Router.</div>
+  </div>
+  <div class="tech-item">
+    <div class="tech-title">Timing</div>
+    <div class="tech-text">In: <strong>0.4s</strong> — snel genoeg dat je niet wacht. Uit: <strong>0.5s</strong> — iets langzamer zodat je de nieuwe pagina ziet opkomen. Totaal: ~1s per navigatie.</div>
+  </div>
+  <div class="tech-item">
+    <div class="tech-title">Link component</div>
+    <div class="tech-text">Custom <strong>&lt;TransitionLink&gt;</strong> component vervangt Next.js Link. Onderschept de klik, triggert de animatie, dan navigeert. Simpel te gebruiken.</div>
+  </div>
+</div>
+
+<p style="font-size:11px;color:#333;margin-top:20px;">Klik je voorkeur — Curtain of Fade?</p>
+
+</body>
+</html>

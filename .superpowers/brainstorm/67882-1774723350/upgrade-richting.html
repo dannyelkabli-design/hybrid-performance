@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Upgrade — Welke richting?</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; padding: 32px 24px; }
+h1 { font-family: 'Arial Black', sans-serif; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: #555; margin-bottom: 6px; }
+.sub { font-size: 12px; color: #444; margin-bottom: 32px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 900px; }
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.card:hover { border-color: #ff3c00; }
+.card.selected { border-color: #ff3c00; box-shadow: 0 0 0 1px #ff3c00; }
+.card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px; right: 12px;
+  background: #ff3c00;
+  color: #fff;
+  font-size: 11px;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+}
+
+.preview {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* Cursor preview */
+.cursor-preview {
+  background: #111;
+}
+.cursor-preview .dot {
+  width: 12px; height: 12px;
+  background: #ff3c00;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px #ff3c00;
+}
+.cursor-preview .ring {
+  width: 48px; height: 48px;
+  border: 1px solid rgba(255,60,0,0.4);
+  border-radius: 50%;
+  position: absolute;
+  top: calc(50% - 10px); left: calc(50% + 15px);
+  transform: translate(-50%, -50%);
+}
+.cursor-preview .btn-mag {
+  position: absolute;
+  bottom: 22px; right: 30px;
+  background: #ff3c00;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* Horizontal scroll preview */
+.hscroll-preview {
+  background: #0d0d0d;
+  gap: 0;
+}
+.hscroll-preview .panel {
+  min-width: 90px;
+  height: 100%;
+  border-right: 1px solid #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+}
+.hscroll-preview .panel-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: rgba(255,60,0,0.15);
+  line-height: 1;
+}
+.hscroll-preview .panel-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #555;
+}
+.arrow { font-size: 20px; color: #ff3c00; margin: 0 8px; }
+
+/* Particle preview */
+.particle-preview {
+  background: #080808;
+}
+.particle-preview canvas-mock {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.particles {
+  position: absolute;
+  inset: 0;
+}
+.p {
+  position: absolute;
+  border-radius: 50%;
+  background: #ff3c00;
+  animation: float 3s infinite ease-in-out;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-12px) scale(1.2); opacity: 1; }
+}
+.particle-text {
+  position: relative;
+  font-size: 28px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255,60,0,0.5);
+}
+
+/* Text scramble preview */
+.scramble-preview {
+  background: #0a0a0a;
+  flex-direction: column;
+  gap: 10px;
+}
+.scramble-line {
+  font-size: 22px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #fff;
+  font-family: 'Arial Black', sans-serif;
+}
+.scramble-line .scrambled {
+  color: #ff3c00;
+}
+.glitch-bar {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ff3c00, transparent);
+  animation: glitch-scan 2s infinite;
+}
+@keyframes glitch-scan {
+  0% { opacity: 0; transform: translateY(-30px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(30px); }
+}
+
+/* 3D preview */
+.threed-preview {
+  background: #080810;
+  perspective: 400px;
+}
+.cube-wrapper {
+  position: relative;
+  width: 60px; height: 60px;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(30deg);
+  animation: spin-slow 8s infinite linear;
+}
+@keyframes spin-slow {
+  to { transform: rotateX(-20deg) rotateY(390deg); }
+}
+.face {
+  position: absolute;
+  width: 60px; height: 60px;
+  border: 1px solid rgba(255,60,0,0.4);
+  background: rgba(255,60,0,0.03);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,60,0,0.5);
+  font-family: 'Arial Black', sans-serif;
+}
+.face.front  { transform: translateZ(30px); }
+.face.back   { transform: rotateY(180deg) translateZ(30px); }
+.face.right  { transform: rotateY(90deg) translateZ(30px); }
+.face.left   { transform: rotateY(-90deg) translateZ(30px); }
+.face.top    { transform: rotateX(90deg) translateZ(30px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+.threed-label {
+  position: absolute;
+  bottom: 14px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #444;
+  font-family: Arial, sans-serif;
+}
+
+.card-body { padding: 14px 16px; }
+.card-title { font-family: 'Arial Black', sans-serif; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 5px; }
+.card-desc { font-size: 11px; color: #555; line-height: 1.5; }
+
+.note { font-size: 11px; color: #333; margin-top: 20px; max-width: 600px; }
+.note span { color: #ff3c00; }
+</style>
+<script>
+function pick(el) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (window._recordChoice) window._recordChoice(el.dataset.choice, el.querySelector('.card-title').textContent);
+}
+</script>
+</head>
+<body>
+
+<h1>Website Upgrade — Welke richting?</h1>
+<p class="sub">Wat maakt het "gruwelijk"? Kies de upgrade die het meeste impact heeft.</p>
+
+<div class="grid">
+
+  <!-- Cursor + Magnetic -->
+  <div class="card" data-choice="cursor" onclick="pick(this)">
+    <div class="preview cursor-preview">
+      <div class="dot"></div>
+      <div class="ring"></div>
+      <div class="btn-mag">Start nu</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Custom Cursor + Magnetic</div>
+      <div class="card-desc">Oranje bolletje dat je muis volgt. Buttons trekken de cursor aan zoals een magneet. Hover-effecten op elke link. Direct zichtbaar — maakt de site instant premium.</div>
+    </div>
+  </div>
+
+  <!-- Horizontal scroll -->
+  <div class="card" data-choice="hscroll" onclick="pick(this)">
+    <div class="preview hscroll-preview">
+      <div class="panel">
+        <div class="panel-num">01</div>
+        <div class="panel-label">Personal<br>Training</div>
+      </div>
+      <div class="panel">
+        <div class="panel-num">02</div>
+        <div class="panel-label">Online<br>Coaching</div>
+      </div>
+      <div class="panel" style="border-color:#ff3c00;">
+        <div class="panel-num" style="color:rgba(255,60,0,0.5)">03</div>
+        <div class="panel-label" style="color:#ff3c00">Voeding &<br>Leefstijl</div>
+      </div>
+      <div class="arrow">→</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Horizontale Scroll Secties</div>
+      <div class="card-desc">Diensten en resultaten scrollen horizontaal terwijl je verticaal scrollt. Pinned panels die openen als een verhaal. Apple-stijl storytelling — indrukwekkend en uniek.</div>
+    </div>
+  </div>
+
+  <!-- Particles / WebGL -->
+  <div class="card" data-choice="particles" onclick="pick(this)">
+    <div class="preview particle-preview">
+      <div class="particles">
+        <div class="p" style="width:3px;height:3px;top:20%;left:15%;animation-delay:0s"></div>
+        <div class="p" style="width:4px;height:4px;top:60%;left:30%;animation-delay:0.5s"></div>
+        <div class="p" style="width:2px;height:2px;top:35%;left:55%;animation-delay:1s"></div>
+        <div class="p" style="width:5px;height:5px;top:70%;left:70%;animation-delay:1.5s"></div>
+        <div class="p" style="width:3px;height:3px;top:25%;left:80%;animation-delay:0.8s"></div>
+        <div class="p" style="width:4px;height:4px;top:80%;left:20%;animation-delay:0.3s"></div>
+        <div class="p" style="width:2px;height:2px;top:45%;left:45%;animation-delay:2s"></div>
+        <div class="p" style="width:6px;height:6px;top:15%;left:65%;animation-delay:1.2s"></div>
+      </div>
+      <div class="particle-text">HYBRID</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Particle Achtergrond</div>
+      <div class="card-desc">Zwevende deeltjes in de hero die reageren op je muis. Gloeiend oranje-rood effect. Geeft de site diepte en energie — ziet eruit als een high-end fitness brand.</div>
+    </div>
+  </div>
+
+  <!-- Text scramble + glitch -->
+  <div class="card" data-choice="scramble" onclick="pick(this)">
+    <div class="preview scramble-preview">
+      <div class="scramble-line">HY<span class="scrambled">B#1D</span></div>
+      <div class="glitch-bar"></div>
+      <div class="scramble-line"><span class="scrambled">P3RF</span>ECT</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Tekst Scramble + Glitch</div>
+      <div class="card-desc">Headlines die beginnen als random karakters en dan "inscramblen" naar de echte tekst. Glitch-lijnen over secties. Raw, energetisch, cyberpunk-achtig maar stoer voor fitness.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">Je mag meerdere kiezen — <span>de meeste sites combineren 2-3 effecten</span>. Klik wat je wil.</p>
+
+<script>
+// Allow multi-select
+document.querySelectorAll('.card').forEach(card => {
+  card.onclick = function() {
+    this.classList.toggle('selected');
+    const selected = [...document.querySelectorAll('.card.selected')].map(c => c.dataset.choice).join(', ');
+    if (window._recordChoice) window._recordChoice(selected, selected);
+  };
+});
+</script>
+
+</body>
+</html>

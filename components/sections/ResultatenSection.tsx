@@ -35,7 +35,7 @@ export function ResultatenSection() {
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
           <SectionLabel className="mb-3 block">Bewezen resultaten</SectionLabel>
-          <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
+          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none">
             RESULTATEN
           </h2>
         </div>
@@ -45,7 +45,7 @@ export function ResultatenSection() {
           {photos.map((photo) => (
             <div
               key={photo.src}
-              className="relative flex-shrink-0 min-w-[280px] md:min-w-[360px] h-[420px] overflow-hidden"
+              className="relative flex-shrink-0 min-w-[80vw] md:min-w-[360px] h-[420px] overflow-hidden"
             >
               <Image
                 src={photo.src}

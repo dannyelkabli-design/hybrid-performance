@@ -22,7 +22,7 @@ export function DienstenSection() {
       {/* Section header */}
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
         <SectionLabel className="mb-3 block">Wat wij doen</SectionLabel>
-        <h2 className="font-condensed font-black italic uppercase text-5xl md:text-6xl text-white leading-none">
+        <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none">
           <span className="block">ONZE</span>
           <span className="block">DIENSTEN</span>
         </h2>
@@ -33,9 +33,9 @@ export function DienstenSection() {
         {diensten.map((d) => (
           <div
             key={d.id}
-            className="flex-shrink-0 min-w-[320px] md:min-w-[400px] h-[400px] bg-surface border border-border flex flex-col justify-between p-8 transition-colors hover:border-accent/50"
+            className="flex-shrink-0 min-w-[85vw] md:min-w-[400px] h-[480px] md:h-[400px] bg-surface border border-border flex flex-col justify-between p-6 md:p-8 transition-colors hover:border-accent/50"
           >
-            <span className="font-condensed font-black italic text-[80px] text-accent/10 leading-none select-none">
+            <span className="font-condensed font-black italic text-[60px] md:text-[80px] text-accent/10 leading-none select-none">
               {d.label}
             </span>
             <div className="flex flex-col gap-4">
