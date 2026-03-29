@@ -31,6 +31,16 @@ export default function DienstenPage() {
               Geen afleiding, geen wachttijden — enkel jij en het resultaat.
             </p>
             <WhatsAppButton label="Start Personal Training" />
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="font-condensed font-bold text-xs tracking-widest uppercase text-muted mb-3">Tarieven</p>
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-condensed font-bold text-sm uppercase tracking-widest text-white">VIP pakket</span>
+                  <span className="font-condensed font-black italic text-2xl text-accent">Op aanvraag</span>
+                </div>
+                <p className="text-muted font-light text-xs">Inclusief 2x/week personal training, directe lijn 24/7 en volledig maatwerk</p>
+              </div>
+            </div>
           </div>
           <div className="flex flex-col gap-6">
             {[
@@ -73,6 +83,19 @@ export default function DienstenPage() {
               Wekelijkse check-ins houden je scherp en gemotiveerd.
             </p>
             <WhatsAppButton label="Start Online Coaching" />
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="font-condensed font-bold text-xs tracking-widest uppercase text-muted mb-3">Tarieven</p>
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-between items-center">
+                  <span className="font-condensed font-bold text-sm uppercase tracking-widest text-white">Basis</span>
+                  <span className="font-condensed font-black italic text-2xl text-accent">€79<span className="text-muted text-sm font-normal not-italic">/maand</span></span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-condensed font-bold text-sm uppercase tracking-widest text-white">Premium</span>
+                  <span className="font-condensed font-black italic text-2xl text-accent">€149<span className="text-muted text-sm font-normal not-italic">/maand</span></span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex flex-col gap-6">
             {[
@@ -116,6 +139,14 @@ export default function DienstenPage() {
               of betere energie gaat — het begint op het bord.
             </p>
             <WhatsAppButton label="Start Voeding & Leefstijl" />
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="font-condensed font-bold text-xs tracking-widest uppercase text-muted mb-3">Tarieven</p>
+              <div className="flex justify-between items-center">
+                <span className="font-condensed font-bold text-sm uppercase tracking-widest text-white">Voedingsbegeleiding</span>
+                <span className="font-condensed font-black italic text-2xl text-accent">Op aanvraag</span>
+              </div>
+              <p className="text-muted font-light text-xs mt-2">Combineer voedingsbegeleiding met een trainingsabonnement voor de beste resultaten</p>
+            </div>
           </div>
           <div className="flex flex-col gap-6">
             {[

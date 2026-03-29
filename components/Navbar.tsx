@@ -11,6 +11,7 @@ const links = [
   { label: 'Resultaten', href: '/#resultaten' },
   { label: 'Prijzen', href: '/#prijzen' },
   { label: 'Over Ons', href: '/over-ons' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact', accent: true },
 ]
 

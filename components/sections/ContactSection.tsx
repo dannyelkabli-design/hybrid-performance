@@ -36,14 +36,13 @@ export function ContactSection() {
     <section id="contact" ref={ref} className="py-24 max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
         <div>
-          <SectionLabel className="mb-3 block">Kom in contact</SectionLabel>
+          <SectionLabel className="mb-3 block">Gratis kennismaking</SectionLabel>
           <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none mb-6">
-            <span className="block">NEEM</span>
-            <span className="block">CONTACT OP</span>
+            <span className="block">START JOUW</span>
+            <span className="block">INTAKE</span>
           </h2>
           <p className="text-muted font-light text-base leading-relaxed mb-8">
-            Heb je een vraag of wil je direct starten? Stuur een berichtje via
-            het formulier of app ons op WhatsApp.
+            Vul het intakeformulier in en we nemen binnen 24 uur contact op voor een gratis kennismakingsgesprek.
           </p>
           <WhatsAppButton label="App ons direct" />
 
@@ -63,6 +62,15 @@ export function ContactSection() {
               Route plannen →
             </a>
           </div>
+
+          <div className="mt-6 flex flex-col gap-2">
+            <p className="font-condensed font-bold text-xs tracking-widest uppercase text-white">
+              Openingstijden
+            </p>
+            <p className="text-muted font-light text-sm">Ma – Vr: 06:00 – 22:00</p>
+            <p className="text-muted font-light text-sm">Za: 08:00 – 18:00</p>
+            <p className="text-muted font-light text-sm">Zo: Gesloten</p>
+          </div>
         </div>
 
         {/* Google Maps */}
@@ -80,29 +88,50 @@ export function ContactSection() {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            name="naam"
-            type="text"
-            required
-            placeholder="Naam"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors"
-          />
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="E-mailadres"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors"
-          />
-          <textarea
-            name="bericht"
-            required
-            rows={5}
-            placeholder="Jouw bericht"
-            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors resize-none"
-          />
+          {/* Naam */}
+          <input name="naam" type="text" required placeholder="Naam"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors" />
+
+          {/* Email */}
+          <input name="email" type="email" required placeholder="E-mailadres"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors" />
+
+          {/* Doel */}
+          <select name="doel" required
+            className="bg-surface border border-border text-white font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
+            <option value="" disabled selected>Wat is jouw doel?</option>
+            <option value="afvallen">Afvallen / vetverbranding</option>
+            <option value="spieropbouw">Spieropbouw</option>
+            <option value="kracht">Meer kracht</option>
+            <option value="conditie">Conditie verbeteren</option>
+            <option value="algemeen">Algemene gezondheid</option>
+          </select>
+
+          {/* Niveau */}
+          <select name="niveau" required
+            className="bg-surface border border-border text-white font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
+            <option value="" disabled selected>Jouw ervaringsniveau</option>
+            <option value="beginner">Beginner (0-1 jaar)</option>
+            <option value="gemiddeld">Gevorderd (1-3 jaar)</option>
+            <option value="ervaren">Ervaren (3+ jaar)</option>
+          </select>
+
+          {/* Interesse */}
+          <select name="interesse" required
+            className="bg-surface border border-border text-white font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
+            <option value="" disabled selected>Interesse in...</option>
+            <option value="personal-training">Personal Training (op locatie)</option>
+            <option value="online-coaching">Online Coaching</option>
+            <option value="voeding">Voeding &amp; Leefstijl</option>
+            <option value="weet-niet">Weet ik nog niet</option>
+          </select>
+
+          {/* Bericht */}
+          <textarea name="bericht" rows={4} placeholder="Vertel iets over jezelf (optioneel)"
+            className="bg-surface border border-border text-white placeholder-muted font-light text-sm px-4 py-4 focus:outline-none focus:border-accent transition-colors resize-none" />
+
           <Button type="submit" disabled={status === 'loading'}>
-            {status === 'loading' ? 'Versturen...' : 'Verstuur bericht'}
+            {status === 'loading' ? 'Versturen...' : 'Stuur mijn intake in'}
           </Button>
           {status === 'success' && (
             <p className="text-sm text-green-400 font-light">

@@ -151,6 +151,19 @@ export default function OverOnsPage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-12 border-t border-border pt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { day: 'Maandag – Vrijdag', hours: '06:00 – 22:00' },
+              { day: 'Zaterdag', hours: '08:00 – 18:00' },
+              { day: 'Zondag', hours: 'Gesloten' },
+            ].map((item) => (
+              <div key={item.day}>
+                <p className="font-condensed font-bold text-xs tracking-widest uppercase text-white mb-1">{item.day}</p>
+                <p className={`font-condensed text-sm ${item.hours === 'Gesloten' ? 'text-muted' : 'text-accent'}`}>{item.hours}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
