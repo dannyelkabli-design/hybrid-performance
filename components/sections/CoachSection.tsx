@@ -82,10 +82,18 @@ export function CoachSection() {
           </p>
           <div className="flex flex-col gap-2 border-t border-border pt-6">
             <span className="font-condensed font-bold text-sm uppercase tracking-widest text-white">
-              Certified Personal Trainer
+              Brendon — Personal Trainer
             </span>
             <span className="font-condensed text-xs tracking-widest uppercase text-muted">
               15+ jaar ervaring · 400+ klanten begeleid
+            </span>
+          </div>
+          <div className="flex flex-col gap-1 border-t border-border pt-4">
+            <span className="font-condensed font-bold text-xs uppercase tracking-widest text-muted">
+              Opleidingen &amp; certificeringen
+            </span>
+            <span className="font-condensed text-xs tracking-widest uppercase text-muted/50 italic">
+              [volgt — certificeringen invullen]
             </span>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Footer } from '@/components/Footer'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { TransitionLink } from '@/components/ui/TransitionLink'
@@ -32,9 +33,12 @@ export default function BlogPost() {
         </h1>
 
         <div className="flex items-center gap-3 border-t border-border pt-6 mb-12">
+          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-accent">
+            <Image src="/images/coach.jpg" alt="Brendon" fill className="object-cover object-top" />
+          </div>
           <div>
             <p className="font-condensed font-bold text-sm uppercase tracking-widest text-white">Brendon</p>
-            <p className="font-condensed text-xs tracking-widest uppercase text-muted">Coach — Hybrid Performance</p>
+            <p className="font-condensed text-xs tracking-widest uppercase text-muted">Personal Trainer · Hybrid Performance</p>
           </div>
         </div>
 
@@ -193,10 +197,18 @@ export default function BlogPost() {
           </ul>
         </div>
 
-        <div className="mt-16 bg-surface border border-border p-8">
+        {/* Dienst link */}
+        <div className="mt-12 border-t border-border pt-8">
+          <p className="font-condensed text-xs tracking-widest uppercase text-muted mb-3">Meer weten?</p>
+          <TransitionLink href="/diensten#personal-training" className="font-condensed font-bold text-sm tracking-widest uppercase text-accent hover:opacity-70 transition-opacity">
+            Bekijk personal training →
+          </TransitionLink>
+        </div>
+
+        <div className="mt-8 bg-surface border border-border p-8">
           <p className="font-condensed font-black italic uppercase text-2xl text-white mb-2">Klaar om te beginnen?</p>
-          <p className="text-muted font-light text-sm mb-6">Brendon begeleidt je stap voor stap — van nul tot structurele progressie. De eerste sessie is gratis.</p>
-          <WhatsAppButton label="Plan gratis kennismaking" />
+          <p className="text-muted font-light text-sm mb-6">Brendon begeleidt je stap voor stap — van nul tot structurele progressie. Plan een gratis kennismakingsgesprek van 30 min.</p>
+          <WhatsAppButton label="Plan gratis kennismakingsgesprek" />
         </div>
 
       </article>

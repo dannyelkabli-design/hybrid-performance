@@ -21,9 +21,12 @@ export function PrijzenSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <SectionLabel className="mb-3 block">Transparante prijzen</SectionLabel>
-          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none">
+          <h2 className="font-condensed font-black italic uppercase text-4xl md:text-6xl text-white leading-none mb-4">
             PAKKETTEN
           </h2>
+          <p className="font-condensed text-xs tracking-widest uppercase text-accent">
+            ⚡ Beperkt aantal plekken beschikbaar — plan je kennismakingsgesprek op tijd
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -58,13 +58,24 @@ export function HeroSection() {
           <span className="block text-[clamp(38px,11vw,160px)]">PERFORMANCE</span>
         </h1>
 
+        {/* Coach intro */}
+        <div className="hero-sub flex items-center gap-4 mb-6">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-accent">
+            <Image src="/images/coach.jpg" alt="Brendon — Coach Hybrid Performance" fill className="object-cover object-top" />
+          </div>
+          <div>
+            <p className="font-condensed font-bold text-sm tracking-widest uppercase text-white">Brendon</p>
+            <p className="font-condensed text-xs tracking-widest uppercase text-muted">Personal Trainer · 15+ jaar ervaring</p>
+          </div>
+        </div>
+
         <p className="hero-sub text-muted font-light text-base md:text-lg max-w-md mb-8">
           Personal trainer in Obdam — bereikbaar vanuit Alkmaar, Heerhugowaard,
           Hensbroek en omgeving. Online coaching beschikbaar in heel Nederland.
         </p>
 
         <div className="flex flex-wrap gap-4">
-          <WhatsAppButton label="Start vandaag" className="hero-cta" />
+          <WhatsAppButton label="Plan gratis kennismakingsgesprek" className="hero-cta" />
           <a
             href="/#diensten"
             className="hero-cta inline-flex items-center gap-2 font-condensed font-bold text-sm tracking-widest uppercase px-7 py-4 border border-white text-white hover:opacity-70 transition-opacity"
