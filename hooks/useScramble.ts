@@ -64,7 +64,7 @@ export function useScramble({
         frameRef.current++
 
         if (frameRef.current > text.length) {
-          clearInterval(intervalRef.current!)
+          if (intervalRef.current) clearInterval(intervalRef.current)
           intervalRef.current = null
           setDisplayText(text)
         }
@@ -78,8 +78,8 @@ export function useScramble({
     }
 
     return () => {
-      clearInterval(intervalRef.current!)
-      clearTimeout(timeoutRef.current!)
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
   }, [trigger, text, speed, delay])
 
