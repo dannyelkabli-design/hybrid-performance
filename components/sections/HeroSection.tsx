@@ -54,8 +54,8 @@ export function HeroSection() {
         </SectionLabel>
 
         <h1 className="font-condensed font-black italic uppercase leading-none text-white mb-6">
-          <span className="block text-[clamp(64px,12vw,160px)]">HYBRID</span>
-          <span className="block text-[clamp(64px,12vw,160px)]">PERFORMANCE</span>
+          <span className="block text-[clamp(38px,11vw,160px)]">HYBRID</span>
+          <span className="block text-[clamp(38px,11vw,160px)]">PERFORMANCE</span>
         </h1>
 
         <p className="hero-sub text-muted font-light text-base md:text-lg max-w-md mb-8">
