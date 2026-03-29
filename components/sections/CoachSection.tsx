@@ -72,7 +72,7 @@ export function CoachSection() {
             <span className="block">BEGELEIDER</span>
           </h2>
           <p className="text-muted font-light text-base leading-relaxed">
-            Met meer dan 5 jaar ervaring in krachttraining en coaching help ik
+            Met meer dan 15 jaar ervaring in krachttraining en coaching help ik
             mensen hun fysieke doelen te bereiken. Mijn aanpak is direct,
             eerlijk en resultaatgericht — geen onzin, wel progressie.
           </p>
@@ -85,7 +85,7 @@ export function CoachSection() {
               Certified Personal Trainer
             </span>
             <span className="font-condensed text-xs tracking-widest uppercase text-muted">
-              5+ jaar ervaring · 100+ klanten begeleid
+              15+ jaar ervaring · 400+ klanten begeleid
             </span>
           </div>
         </div>

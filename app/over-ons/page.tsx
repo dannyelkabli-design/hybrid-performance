@@ -120,8 +120,8 @@ export default function OverOnsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { stat: '5+', label: 'Jaar ervaring' },
-              { stat: '100+', label: 'Klanten begeleid' },
+              { stat: '15+', label: 'Jaar ervaring' },
+              { stat: '400+', label: 'Klanten begeleid' },
               { stat: '3', label: 'Trainingsruimtes' },
               { stat: '1:1', label: 'Persoonlijke begeleiding' },
             ].map((s) => (
