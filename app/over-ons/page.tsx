@@ -88,12 +88,28 @@ export default function OverOnsPage() {
 
       {/* Foto grid — gym impressie */}
       <section className="py-24 max-w-7xl mx-auto px-6">
-        <SectionLabel className="mb-3 block">De gym</SectionLabel>
-        <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none mb-12">
-          <span className="block">ONZE</span>
-          <span className="block">LOCATIE</span>
-        </h2>
-
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <SectionLabel className="mb-3 block">De gym</SectionLabel>
+            <h2 className="font-condensed font-black italic uppercase text-4xl md:text-5xl text-white leading-none">
+              <span className="block">ONZE</span>
+              <span className="block">LOCATIE</span>
+            </h2>
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="font-condensed font-bold text-sm uppercase tracking-widest text-white">
+              Vaart 8, Obdam
+            </p>
+            <a
+              href="https://maps.google.com/?q=Vaart+8,+Obdam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-condensed font-bold text-xs tracking-widest uppercase text-accent hover:opacity-70 transition-opacity"
+            >
+              Route plannen →
+            </a>
+          </div>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
             { src: '/images/hp-over-2.jpg', alt: 'Receptie en nutrition bar' },
